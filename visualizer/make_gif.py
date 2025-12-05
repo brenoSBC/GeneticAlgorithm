@@ -31,7 +31,17 @@ def generate_frames(map_grid, moves):
             x, y = new_x, new_y
             path.append((x, y))
 
-        fig, ax = plt.subplots(figsize=(6, 6))
+        fig, ax = plt.subplots()
+  
+        scale = 20  # quanto maior, maior a imagem (10, 20, 30...)
+        dpi = fig.get_dpi()
+        fig.set_size_inches((W * scale) / dpi, (H * scale) / dpi)
+
+        plt.subplots_adjust(left=0, right=1, top=1, bottom=0)
+        ax.set_position([0, 0, 1, 1])
+        ax.axis("off")
+        fig.patch.set_alpha(0)
+
         arr = np.zeros((H, W, 3), dtype=np.float32)
 
         for i in range(H):
@@ -48,14 +58,11 @@ def generate_frames(map_grid, moves):
             if 0 <= px < H and 0 <= py < W:
                 arr[px, py] = [0.0, 0.9, 0.95]
 
-        ax.imshow(arr)
-        ax.set_title("Path")
-        ax.set_xticks([])
-        ax.set_yticks([])
-        fig.canvas.draw()
+        ax.imshow(arr, interpolation="nearest")
 
-        image = np.frombuffer(fig.canvas.buffer_rgba(), dtype=np.uint8)
+        fig.canvas.draw()
         w, h = fig.canvas.get_width_height()
+        image = np.frombuffer(fig.canvas.buffer_rgba(), dtype=np.uint8)
         image = image.reshape((h, w, 4))[:, :, :3]
         frames.append(image)
 
