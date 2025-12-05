@@ -1,2 +1,3 @@
 # GeneticAlgorithm
-![Path](path_visualize.gif)
+
+<img src="path_visualize.gif" width="400">
