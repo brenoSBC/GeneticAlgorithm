@@ -33,7 +33,7 @@ def generate_frames(map_grid, moves):
 
         fig, ax = plt.subplots()
   
-        scale = 20  # quanto maior, maior a imagem (10, 20, 30...)
+        scale = 20
         dpi = fig.get_dpi()
         fig.set_size_inches((W * scale) / dpi, (H * scale) / dpi)
 
